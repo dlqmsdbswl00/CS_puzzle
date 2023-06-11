@@ -14,7 +14,8 @@ namespace SimplePuzzleGame
 
         int movesNumber = 0, labelIndex = 0;  //이동 횟수와 버튼 숫자를 초기화
 
-        private void shuffleButtons()       //숫자 버튼을 무작위로 섞어준다
+        //숫자 버튼 셔플 메소드
+        private void shuffleButtons()       
         {
             List<int> labelList = new List<int>();  //숫자를 추적해 중복이 되지 않도록 하는 리스트
 
@@ -31,17 +32,18 @@ namespace SimplePuzzleGame
                 }
                 else
                 {
-                    btn.Text = labelIndex.ToString();   //btn text를 Index값으로 수정하고 색 변경
+                    btn.Text = (labelIndex).ToString();   //btn text를 Index값으로 수정하고 색 변경
                     btn.BackColor = Color.White;
                 }
                 labelList.Add(labelIndex);              //lableList에 lableIndex를 추가한다 (중복 방지)
             }
-
             movesNumber = 0;
             lblNoOfMoves.Text = "이동 횟수 : " + movesNumber;
         }
 
-        private void swapLabel(Object sender, EventArgs e)  //버튼 이동 메소드
+
+        //버튼 이동 메소드
+        private void swapLabel(Object sender, EventArgs e)  
         {
             Button btn = (Button)sender;
 
@@ -59,7 +61,7 @@ namespace SimplePuzzleGame
             }
 
             //선택한 버튼(btn)과 빈 버튼(nullBtn)의 위치를 비교해 이동 가능한 경우 동작 수행
-            if (btn.TabIndex == (nullBtn.TabIndex - 1) ||    //선택한 버튼이 빈 버튼의 왼쪽
+            if (btn.TabIndex == (nullBtn.TabIndex - 1) ||   //선택한 버튼이 빈 버튼의 왼쪽
                 btn.TabIndex == (nullBtn.TabIndex - 4) ||   //선택한 버튼이 빈 버튼의 위쪽
                 btn.TabIndex == (nullBtn.TabIndex + 1) ||   //선택한 버튼이 빈 버튼의 오른쪽
                 btn.TabIndex == (nullBtn.TabIndex + 4))     //선택한 버튼이 빈 버튼의 아래쪽
@@ -71,23 +73,6 @@ namespace SimplePuzzleGame
                 movesNumber++;                              //이동 횟수 +1
                 lblNoOfMoves.Text = "이동 횟수 : " + movesNumber;   //이동 횟수 레이블 출력
             }
-            checkOrder();
-        }
-
-        private void checkOrder()
-        {
-            int index = 0;
-            foreach (Button btn in this.pnl.Controls)
-            {
-                if (btn.Text != "" && Convert.ToInt16(btn.Text) != index)
-                {
-                    return;
-                }
-
-                index++;
-            }
-
-            MessageBox.Show("축하합니다! 당신의 점수는 " + movesNumber + " 점");
         }
 
         private void btnNewGame_Click(object sender, EventArgs e)
